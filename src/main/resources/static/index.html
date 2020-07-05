@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script type="text/javascript" src="js/axios.js"></script>
+</head>
+<body>
+    <h1>hello spring</h1>
+
+       <div id="app">
+           <input type="button" value="查询" class="btn"  id="submit" @click="openLock()">
+            <div id="result"></div>
+       </div>
+
+        <script>
+            var v=new Vue({
+                el: "#app",
+                data:{
+                    bid:"1",
+                    longitude:"2",
+                    latitude:"3"
+                },
+                methods:{
+                    openLock:function () {
+                        var params=new URLSearchParams();
+                        params.append("bid",this.bid);
+                        params.append("longitude",this.longitude);
+                        params.append("latitude",this.latitude)
+                        axios.post("/yc74ibike/open",params).then( yc =>{
+                            if(yc.data.code==0){
+                            alert(yc.data.msg);
+                        }else{
+                           // alert(yc.data.code)
+                            $("#result").html("车号"+yc.data.bid+",经度："+yc.data.longitude+",纬度："+yc.data.latitude)
+                        }
+                    });
+
+                    }
+                }
+
+            });
+
+
+        </script>
+
+</body>
+</html>
